@@ -6,22 +6,18 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1"></FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
+    <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.9"
+        android:layout_height="wrap_content"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/custom_navbar"
-        app:itemIconSize="36dp"/>
-
-
-
-
-
-
+        app:itemIconSize="36dp" />
 
 </LinearLayout>
