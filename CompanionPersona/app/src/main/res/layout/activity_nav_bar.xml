@@ -10,10 +10,13 @@
         android:layout_height="match_parent"
         android:layout_weight="0.1"></FrameLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/custom_navbar"
+        app:itemIconSize="36dp"/>
 
 
 
