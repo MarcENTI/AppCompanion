@@ -16,6 +16,6 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000) // Espera de 2 segundos
+        }, 4000) // Espera de 4 segundos
     }
 }
