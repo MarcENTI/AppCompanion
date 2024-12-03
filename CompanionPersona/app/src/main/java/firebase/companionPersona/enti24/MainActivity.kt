@@ -4,20 +4,18 @@ import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
+
 import com.google.android.gms.common.api.ApiException
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        private lateinit var googleSignInClient: GoogleSignInClient
+        private lateinit var googleSignInClient: GoogleSignInAccount
 
         super.onCreate(savedInstanceState)
          setContentView(R.layout.activity_login_google)
