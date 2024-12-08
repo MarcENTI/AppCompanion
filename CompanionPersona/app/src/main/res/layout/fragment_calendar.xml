@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Navegación del mes (centrada horizontalmente por el LinearLayout) -->
+        <LinearLayout
+            android:id="@+id/navigationLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/prevMonthBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Previous month"
+                android:src="@android:drawable/ic_media_previous"/>
+
+            <TextView
+                android:id="@+id/monthTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="December 2024"/>
+
+            <ImageButton
+                android:id="@+id/nextMonthBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Next month"
+                android:src="@android:drawable/ic_media_next"/>
+        </LinearLayout>
+
+        <!-- Calendario -->
+        <GridLayout
+            android:id="@+id/daysContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="7"
+            android:rowCount="7">
+        </GridLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

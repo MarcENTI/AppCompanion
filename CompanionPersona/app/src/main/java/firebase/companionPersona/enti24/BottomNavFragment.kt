@@ -25,36 +25,37 @@ class BottomNavFragment : Fragment() {
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-
-                R.id.forum ->
-                {
-                    true;
+                R.id.forum -> {
+                    // Aquí colocar fragmento de forum
+                    true
                 }
-                R.id.compendium ->
-                {
-                    true;
+                R.id.compendium -> {
+                    // Aquí colocar fragmento de compendium
+                    true
                 }
-                R.id.chat ->
-                {
-                    true;
+                R.id.chat -> {
+                    // Aquí colocar fragmento de chat
+                    true
                 }
-                R.id.calendar ->
-                {
-                    true;
+                R.id.calendar -> {
+                    val calendarFragment = CalendarFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.inner_fragment_container, calendarFragment)
+                        .commit()
+                    true
                 }
-                R.id.confident ->
-                {
-                    true;
+                R.id.confident -> {
+                    // Aquí colocar fragmento confident
+                    true
                 }
                 else -> false
-
             }
+        }
 
 
-            }
+    }
 
     }
 
 
 
-}
