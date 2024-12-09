@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
-
 import com.google.android.gms.common.api.ApiException
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var googleSignInClient: GoogleSignInClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        private lateinit var googleSignInClient: GoogleSignInAccount
+
 
         super.onCreate(savedInstanceState)
          setContentView(R.layout.activity_login_google)
