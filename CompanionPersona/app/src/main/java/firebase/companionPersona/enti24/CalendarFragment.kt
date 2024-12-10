@@ -21,9 +21,9 @@ class CalendarFragment : Fragment() {
 
     // Eventos: "YYYY-M-D" -> Pair(Título, Descripción)
     private val eventsMap: Map<String, Pair<String, String>> = mapOf(
-        "2024-12-15" to ("Evento Especial" to "Descripción del evento especial"),
-        "2024-12-24" to ("Nochebuena" to "Cena con la familia"),
-        "2024-12-31" to ("Fin de Año" to "Fiesta de fin de año con amigos")
+        "2009-4-15" to ("Evento Especial" to "Descripción del evento especial"),
+        "2009-5-24" to ("Nochebuena" to "Cena con la familia"),
+        "2009-5-31" to ("Fin de Año" to "Fiesta de fin de año con amigos")
     )
 
     private val dayHeaders = arrayOf("SUN","MON","TUE","WED","THU","FRI","SAT")
@@ -41,6 +41,9 @@ class CalendarFragment : Fragment() {
         nextMonthBtn = view.findViewById(R.id.nextMonthBtn)
         daysContainer = view.findViewById(R.id.daysContainer)
 
+        //Para que sea 2009
+        calendar.add(Calendar.YEAR, -15)
+        calendar.add(Calendar.MONTH, -8)
         updateCalendar()
 
         prevMonthBtn.setOnClickListener {
@@ -61,7 +64,7 @@ class CalendarFragment : Fragment() {
         val sdf = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         monthTitle.text = sdf.format(calendar.time).replaceFirstChar { it.uppercase() }
 
-        val year = calendar.get(Calendar.YEAR)
+        val year = calendar.get(Calendar.YEAR )
         val month = calendar.get(Calendar.MONTH)
         val tempCal = Calendar.getInstance()
         tempCal.time = calendar.time

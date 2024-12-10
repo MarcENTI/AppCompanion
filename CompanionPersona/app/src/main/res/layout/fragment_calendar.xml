@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Navegación del mes (centrada horizontalmente por el LinearLayout) -->
+        <!-- Navegación del mes -->
         <LinearLayout
             android:id="@+id/navigationLayout"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="December 2024"/>
+                android:text="December 2009"/>
 
             <ImageButton
                 android:id="@+id/nextMonthBtn"
