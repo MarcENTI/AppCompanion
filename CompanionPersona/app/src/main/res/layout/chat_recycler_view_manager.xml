@@ -7,11 +7,12 @@
     android:layout_margin="8dp">
 
     <ImageView
+        android:id="@+id/chat_image"
         android:layout_width="156dp"
         android:layout_height="156dp"
         android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/lastMessage"
+            android:id="@+id/last_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
