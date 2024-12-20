@@ -30,7 +30,10 @@ class BottomNavFragment : Fragment() {
                     true
                 }
                 R.id.compendium -> {
-                    // Aquí colocar fragmento de compendium
+                    val confidentsFragment = ConfidentsFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.inner_fragment_container, confidentsFragment)
+                        .commit()
                     true
                 }
                 R.id.chat -> {
@@ -45,9 +48,10 @@ class BottomNavFragment : Fragment() {
                     true
                 }
                 R.id.confident -> {
-                    // Aquí colocar fragmento confident
+
                     true
                 }
+
                 else -> false
             }
         }

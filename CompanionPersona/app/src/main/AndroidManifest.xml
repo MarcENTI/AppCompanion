@@ -13,6 +13,18 @@
         android:theme="@style/Theme.CompanionPersona"
         tools:targetApi="31">
         <activity
+            android:name=".ConfidantDetailFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ConfidentAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Confidant"
+            android:exported="false" />
+        <activity
+            android:name=".ConfidentsFragment"
+            android:exported="false" />
+        <activity
             android:name=".CalendarFragment"
             android:exported="false" />
         <activity
