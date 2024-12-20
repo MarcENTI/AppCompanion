@@ -48,7 +48,7 @@ class ConfidantDetailFragment : Fragment() {
 
         nameTextView.text = confidantName
         imageView.setImageResource(personaImageResId)
-        // Texto largo ejemplo:
+
         infoTextView.text = """
             ${getString(R.string.detail_availability)}
             Nights of Thursday, Friday, Saturday and Sunday

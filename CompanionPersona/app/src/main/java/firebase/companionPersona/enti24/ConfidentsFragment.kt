@@ -15,10 +15,8 @@ class ConfidentsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ConfidentAdapter
-    private var showPersonaImages = false // estado del switch
+    private var showPersonaImages = false
 
-    // Lista ejemplo de confidants con dos imágenes: carta y persona
-    // Asegúrate de tener estos drawables en res/drawable
     private val confidantsList = listOf(
         Confidant("Mutatsu (Tower)", R.drawable.mutatsu_card, R.drawable.mutatsu_persona),
         Confidant("Bunkichi & Mitsuko (Hierophant)", R.drawable.bunkichi_mitsuko_card, R.drawable.bunkichi_mitsuko_persona),
@@ -41,17 +39,14 @@ class ConfidentsFragment : Fragment() {
         val descriptionText = view.findViewById<TextView>(R.id.descriptionTextView)
         val imageSwitch = view.findViewById<Switch>(R.id.imageSwitch)
 
-        // Texto descriptivo
         descriptionText.text = getString(R.string.confidant_information)
 
         recyclerView = view.findViewById(R.id.confidentsRecyclerView)
-        // 3 columnas para las cartas
         val spanCount = 3
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
-
-        // Añadimos espacios uniformes entre las cartas
         val spacing = resources.getDimensionPixelSize(R.dimen.recycler_item_spacing)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing))
+
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, true))
 
         adapter = ConfidentAdapter(confidantsList, showPersonaImages) { selectedConfidant ->
             val detailFragment = ConfidantDetailFragment.newInstance(
@@ -70,20 +65,6 @@ class ConfidentsFragment : Fragment() {
             showPersonaImages = isChecked
             adapter.showPersonaImages = showPersonaImages
             adapter.notifyDataSetChanged()
-        }
-    }
-
-    // Clase para espaciar uniformemente los items en el grid
-    class GridSpacingItemDecoration(private val spanCount: Int, private val spacing: Int) : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            val position = parent.getChildAdapterPosition(view) // posición del item
-            val column = position % spanCount
-            // Calcular márgenes para que queden uniformes
-            outRect.left = column * spacing / spanCount
-            outRect.right = spacing - (column + 1) * spacing / spanCount
-            if (position >= spanCount) {
-                outRect.top = spacing
-            }
         }
     }
 }

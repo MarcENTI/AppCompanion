@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Botón cerrar arriba a la derecha -->
+
         <ImageView
             android:id="@+id/closeButton"
             android:layout_width="48dp"
@@ -23,7 +23,7 @@
             android:contentDescription="@string/close_detail"
             android:padding="8dp"/>
 
-        <!-- Fila con el nombre a la izq. y la imagen a la der. -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:contentDescription="@string/confidant_card"/>
         </LinearLayout>
 
-        <!-- Texto detallado -->
+        
         <TextView
             android:id="@+id/detailConfidantInfo"
             android:layout_width="match_parent"
