@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private lateinit var googleSignInClient: GoogleSignInClient
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,46 @@ class LoginActivity : AppCompatActivity() {
             if(task.isSuccessful)
             {
                 val account = task.getResult(ApiException::class.java)
-                Log.d("Login Google", "Tengo la info de:" + account.displayName)
+
+                if(account != null)
+                {
+                    val usersCollection = db.collection("users")
+
+                    //numero de usuarios existentes
+                    usersCollection.get().addOnSuccessListener {
+                        result ->
+                        val userCount = result.size()
+                        val generatedId = GenerateUserID(userCount + 1)
+
+                        val userData = hashMapOf(
+                            "name" to account.displayName,
+                            "email" to account.email,
+                            "id" to generatedId
+                        )
+
+                        //guardar datos en firebase firestore
+
+                        usersCollection.document(account.id!!).set(userData)
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "Usuario guardado exitosamente con ID: $generatedId")
+
+                                //redirigir a profileActivity
+                                val intent = Intent(this, ProfileActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "Error al guardar usuario", e)
+                            }
+                    }
+                        .addOnFailureListener { e ->
+                            Log.w("Firestore", "Error al obtener la colección de usuarios", e)
+                        }
+                }
+                else
+                {
+                    Log.w("Login Google", "ID de cuenta es nulo.")
+                }
             }
             else
             {
@@ -83,4 +124,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun GenerateUserID(userCount: Int): String {
+        val letter = ('A'..'Z').random()
+        val number = String.format("%04d", userCount) // Sin sumar +1 aquí
+        return "$letter$number"
+    }
+
 }
