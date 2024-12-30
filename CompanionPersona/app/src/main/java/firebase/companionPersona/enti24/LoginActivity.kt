@@ -37,7 +37,15 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        findViewById<SignInButton>(R.id.btn_login_google).setOnClickListener{ signInGoogle()}
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+
+        account?.let {
+            Log.d("Login Google", "Ya has robado la info de la cuenta: " + account.displayName + "anteriormente")
+        }?:run {
+            Log.d("Login Google", "No hay sesion iniciada")
+            findViewById<SignInButton>(R.id.btn_login_google).setOnClickListener{ signInGoogle()}
+        }
+
 
 
         btnLogin.setOnClickListener {
