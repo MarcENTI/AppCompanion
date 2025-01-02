@@ -14,6 +14,15 @@
         android:orientation="vertical">
 
 
+        <ProgressBar
+            android:id="@+id/progressBarCompendium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
+
         <TextView
             android:id="@+id/fusionCalculatorTitle"
             android:layout_width="wrap_content"
@@ -23,13 +32,13 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
+
         <EditText
             android:id="@+id/fusionCalculatorEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Introduce the Persona you search"
             android:layout_marginBottom="24dp"/>
-
 
 
         <TextView
@@ -99,6 +108,5 @@
             android:id="@+id/compendiumRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
 </ScrollView>
