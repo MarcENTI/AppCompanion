@@ -48,7 +48,10 @@ class BottomNavFragment : Fragment() {
                     true
                 }
                 R.id.confident -> {
-
+                    val compendiumFragment = CompendiumFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.inner_fragment_container, compendiumFragment)
+                        .commit()
                     true
                 }
 

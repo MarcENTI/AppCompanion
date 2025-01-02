@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollContainerCompendium"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/fusionCalculatorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fusion Calculator"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/fusionCalculatorEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Introduce the Persona you search"
+            android:layout_marginBottom="24dp"/>
+
+
+
+        <TextView
+            android:id="@+id/compendiumTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compendium"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/compendiumSearchEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Persona's name"
+                android:layout_marginEnd="8dp"/>
+
+            <CheckBox
+                android:id="@+id/filtersCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filters"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/filterButtonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnByArcana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Arcana"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnByLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Level"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnByName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Name"/>
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/compendiumRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>
