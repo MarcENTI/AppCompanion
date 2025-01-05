@@ -1,6 +1,5 @@
 package firebase.companionPersona.enti24
 
-import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,115 +22,141 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth // Corregido: Declarar firebaseAuth correctamente
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Inicializar Firebase Auth y Realtime Database
+        firebaseAuth = FirebaseAuth.getInstance() // Corregido: Inicialización de firebaseAuth
+        databaseReference = FirebaseDatabase.getInstance().getReference("users")
+
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("431744884113-hgmcd9qdihi8uam2kc28osm3g0nboect.apps.googleusercontent.com")
             .requestEmail()
             .build()
 
-        //boton google
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val account = GoogleSignIn.getLastSignedInAccount(this)
-
         account?.let {
-            Log.d("Login Google", "Ya has robado la info de la cuenta: " + account.displayName + "anteriormente")
-        }?:run {
-            Log.d("Login Google", "No hay sesion iniciada")
-            findViewById<SignInButton>(R.id.btn_login_google).setOnClickListener{ signInGoogle()}
+            Log.d("Login Google", "Ya has robado la info de la cuenta: ${account.displayName} anteriormente")
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+            finish()
+        } ?: run {
+            Log.d("Login Google", "No hay sesión iniciada")
+            findViewById<SignInButton>(R.id.btn_login_google).setOnClickListener { signInGoogle() }
         }
-
-
 
         btnLogin.setOnClickListener {
             // TODO: Agregar validación de usuario
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-
         btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
-    private fun signInGoogle()
-    {
+    private fun signInGoogle() {
         val signInIntent = googleSignInClient.signInIntent
+        Log.d("Login Google", "Iniciando el intent de inicio de sesión de Google")
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN_GOOGLE)
-        {
+        if (requestCode == RC_SIGN_IN_GOOGLE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            if(task.isSuccessful)
-            {
+            if (task.isSuccessful) {
                 val account = task.getResult(ApiException::class.java)
 
-                if(account != null)
-                {
-                    val usersCollection = db.collection("users")
+                if (account != null) {
+                    val idToken = account.idToken
+                    val credential = GoogleAuthProvider.getCredential(idToken, null)
 
-                    //numero de usuarios existentes
-                    usersCollection.get().addOnSuccessListener {
-                        result ->
-                        val userCount = result.size()
-                        val generatedId = GenerateUserID(userCount + 1)
-
-                        val userData = hashMapOf(
-                            "name" to account.displayName,
-                            "email" to account.email,
-                            "id" to generatedId
-                        )
-
-                        //guardar datos en firebase firestore
-
-                        usersCollection.document(account.id!!).set(userData)
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "Usuario guardado exitosamente con ID: $generatedId")
-
-                                //redirigir a profileActivity
-                                val intent = Intent(this, ProfileActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                    firebaseAuth.signInWithCredential(credential)
+                        .addOnCompleteListener { authTask ->
+                            if (authTask.isSuccessful) {
+                                // Usuario autenticado con Google
+                                val currentUser = firebaseAuth.currentUser
+                                currentUser?.let {
+                                    checkIfUserExistsAndProceed(
+                                        it.uid,
+                                        account.displayName,
+                                        account.email
+                                    ) // Cambio: Ahora verifica si existe antes de proceder.
+                                }
+                            } else {
+                                Log.e(
+                                    "FirebaseAuth",
+                                    "Error al autenticar en Firebase",
+                                    authTask.exception
+                                )
                             }
-                            .addOnFailureListener { e ->
-                                Log.w("Firestore", "Error al guardar usuario", e)
-                            }
-                    }
-                        .addOnFailureListener { e ->
-                            Log.w("Firestore", "Error al obtener la colección de usuarios", e)
                         }
-                }
-                else
-                {
+                } else {
                     Log.w("Login Google", "ID de cuenta es nulo.")
                 }
-            }
-            else
-            {
-                Log.w("Login Google", "Error en el login", task.exception)
+            } else {
+                Log.w("Login Google", "Error al iniciar sesión con Google", task.exception)
             }
         }
-
     }
 
-    private fun GenerateUserID(userCount: Int): String {
-        val letter = ('A'..'Z').random()
-        val number = String.format("%04d", userCount) // Sin sumar +1 aquí
-        return "$letter$number"
+    // Cambio: Nueva función para verificar la existencia del usuario
+    private fun checkIfUserExistsAndProceed(uid: String, name: String?, email: String?) {
+        databaseReference.child(uid).get()
+            .addOnSuccessListener { dataSnapshot ->
+                if (dataSnapshot.exists()) {
+                    // Usuario ya existe, redirigir directamente
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // Usuario no existe, guardarlo
+                    saveUserToRealtimeDatabase(uid, name, email) {
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("RealtimeDatabase", "Error al verificar la existencia del usuario", e)
+            }
     }
 
+
+    private fun saveUserToRealtimeDatabase(uid: String, name: String?, email: String?, onSuccess: () -> Unit) {
+        val user = mapOf(
+            "name" to (name ?: "Desconocido"),
+            "email" to (email ?: "Sin email"),
+            "id" to uid,
+            "public_id" to generatePublicUserID()
+        )
+
+        databaseReference.child(uid).setValue(user)
+            .addOnSuccessListener {
+                Log.d("RealtimeDatabase", "Usuario guardado exitosamente en la base de datos")
+                onSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e("RealtimeDatabase", "Error al guardar el usuario en la base de datos", e)
+            }
+    }
+
+    private fun generatePublicUserID(): String {
+        val letters = ('A'..'Z').toList()
+        val randomLetter = letters.random()
+        val randomNumber = (1000..9999).random()
+        return "$randomLetter$randomNumber" // Ejemplo: "A1234"
+    }
 }

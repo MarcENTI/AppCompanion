@@ -1,72 +1,73 @@
 package firebase.companionPersona.enti24
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var db: FirebaseFirestore
+    private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
 
-        //iniciarlizar firestore y authentication
-        db = FirebaseFirestore.getInstance()
+        // Inicializar Realtime Database y FirebaseAuth
+        database = FirebaseDatabase.getInstance().getReference("users")
         auth = FirebaseAuth.getInstance()
 
-        //textViews
+        // Referencias a los elementos del layout
         val userNameTextView = findViewById<TextView>(R.id.user_name)
         val userIdTextView = findViewById<TextView>(R.id.user_id)
+        val btnLogOut = findViewById<Button>(R.id.LogOutButton)
 
         val currentUser = auth.currentUser
-        if(currentUser != null)
-        {
+        if (currentUser != null) {
             val userId = currentUser.uid
 
-            //obtener datos de firestore
-            db.collection("users").document(userId).get()
-                .addOnSuccessListener {
-                    document->
-                    if(document !=null && document.exists())
-                    {
-                        val userName = document.getString("name") ?: "Nombre no encontrado"
-                        val userCustomId = document.getString("id") ?: "ID no encontrado"
+            // Obtener datos desde Realtime Database
+            database.child(userId).get()
+                .addOnSuccessListener { dataSnapshot ->
+                    if (dataSnapshot.exists()) {
+                        val userName = dataSnapshot.child("name").value?.toString() ?: "Nombre no encontrado"
+                        val userCustomId = dataSnapshot.child("public_id").value?.toString() ?: "ID no encontrado"
 
-                        //act textViews
+                        // Actualizar TextViews
                         userNameTextView.text = userName
                         userIdTextView.text = userCustomId
-                    }else {
+                    } else {
                         userNameTextView.text = "Usuario no encontrado"
                         userIdTextView.text = "N/A"
                     }
                 }
-                .addOnFailureListener {
-                    e->
+                .addOnFailureListener { e ->
                     userNameTextView.text = "Error al cargar"
                     userIdTextView.text = "N/A"
                 }
-
-
-            
-        }
-        else
-        {
+        } else {
             userNameTextView.text = "No has iniciado sesión"
             userIdTextView.text = "N/A"
         }
 
+        btnLogOut.setOnClickListener {
+            // Cerrar sesión
+            auth.signOut()
 
-
-
-
+            googleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 }
