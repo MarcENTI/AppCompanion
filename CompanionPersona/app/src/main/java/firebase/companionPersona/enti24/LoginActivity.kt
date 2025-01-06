@@ -3,7 +3,10 @@ package firebase.companionPersona.enti24
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -55,8 +58,30 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            // TODO: Agregar validación de usuario
-            startActivity(Intent(this, MainActivity::class.java))
+            val etUsername = findViewById<EditText>(R.id.etUsername)
+            val etPassword = findViewById<EditText>(R.id.etPassword)
+
+            val usernameOrEmail = etUsername.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            if (usernameOrEmail.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (Patterns.EMAIL_ADDRESS.matcher(usernameOrEmail).matches()) {
+                // Es un correo electrónico, intentar iniciar sesión directamente
+                signInWithEmail(usernameOrEmail, password)
+            } else {
+                // No es un correo, asumir que es un nombre de usuario y buscar su correo en la base de datos
+                findEmailByUsername(usernameOrEmail) { email ->
+                    if (email != null) {
+                        signInWithEmail(email, password)
+                    } else {
+                        Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
         btnRegister.setOnClickListener {
@@ -158,5 +183,40 @@ class LoginActivity : AppCompatActivity() {
         val randomLetter = letters.random()
         val randomNumber = (1000..9999).random()
         return "$randomLetter$randomNumber" // Ejemplo: "A1234"
+    }
+
+    //para iniciar sesion con correo
+    private fun signInWithEmail(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Error de inicio de sesión: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    //para que se pueda iniciar sesion con usuario o correo indiferentemente
+    private fun findEmailByUsername(username: String, callback: (String?) -> Unit) {
+        databaseReference.orderByChild("name").equalTo(username).get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    val email = snapshot.children.firstOrNull()?.child("email")?.value as? String
+                    callback(email)
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("RealtimeDatabase", "Error al buscar el usuario", e)
+                callback(null)
+            }
     }
 }
