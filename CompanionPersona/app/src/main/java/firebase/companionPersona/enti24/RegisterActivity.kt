@@ -2,6 +2,7 @@ package firebase.companionPersona.enti24
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
@@ -22,7 +23,9 @@ class RegisterActivity : AppCompatActivity() {
 
         //iniciar firebase
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().getReference("users")
+        val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
+        database = FirebaseDatabase.getInstance(databaseURL).getReference("users")
+
 
         //user data
         val etUsername = findViewById<EditText>(R.id.etNewUsername)
@@ -55,6 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -84,14 +88,18 @@ class RegisterActivity : AppCompatActivity() {
             "public_id" to publicUserID
         )
 
+        Log.d("Database", "Guardando datos del usuario: $user en la referencia: ${database.child(uid)}")
+
         database.child(uid).setValue(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Error al guardar usuario: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Log.e("DatabaseError", "Error al guardar usuario", exception)
             }
     }
+
 
     private fun generatePublicUserID(): String {
         val letters = ('A'..'Z').toList()

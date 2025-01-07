@@ -34,7 +34,9 @@ class LoginActivity : AppCompatActivity() {
 
         // Inicializar Firebase Auth y Realtime Database
         firebaseAuth = FirebaseAuth.getInstance() // Corregido: Inicialización de firebaseAuth
-        databaseReference = FirebaseDatabase.getInstance().getReference("users")
+        val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
+        databaseReference = FirebaseDatabase.getInstance(databaseURL).getReference("users")
+
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
