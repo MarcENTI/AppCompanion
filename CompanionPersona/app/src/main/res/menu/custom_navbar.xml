@@ -12,14 +12,14 @@
         android:title="Calendar" />
 
     <item
-        android:id="@+id/confident"
-        android:icon="@drawable/confident"
-        android:title="Confident" />
-
-    <item
         android:id="@+id/compendium"
         android:icon="@drawable/compendium"
         android:title="Compendium" />
+
+    <item
+        android:id="@+id/confident"
+        android:icon="@drawable/confident"
+        android:title="Confident" />
 
     <item
         android:id="@+id/chat"
