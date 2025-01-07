@@ -21,7 +21,8 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
+            //startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }

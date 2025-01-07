@@ -62,7 +62,7 @@ class CalendarFragment : Fragment() {
 
         // Título del mes
         val sdf = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-        monthTitle.text = sdf.format(calendar.time).replaceFirstChar { it.uppercase() }
+        monthTitle.text = ("\n\n\n" + sdf.format(calendar.time).replaceFirstChar { it.uppercase() })
 
         val year = calendar.get(Calendar.YEAR )
         val month = calendar.get(Calendar.MONTH)
