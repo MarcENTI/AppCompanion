@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
 
 class LoginActivity : AppCompatActivity() {
 
@@ -36,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance() // Corregido: Inicialización de firebaseAuth
         val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
         databaseReference = FirebaseDatabase.getInstance(databaseURL).getReference("users")
-
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
@@ -207,18 +207,31 @@ class LoginActivity : AppCompatActivity() {
 
     //para que se pueda iniciar sesion con usuario o correo indiferentemente
     private fun findEmailByUsername(username: String, callback: (String?) -> Unit) {
-        databaseReference.orderByChild("name").equalTo(username).get()
+        Log.d("RealtimeDatabase", "Buscando email para el usuario: $username") // Log para depuración
+        val query: Query = databaseReference.orderByChild("name").equalTo(username)
+
+        query.get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
+                    Log.d("RealtimeDatabase", "Datos encontrados para usuario: ${snapshot.value}")
                     val email = snapshot.children.firstOrNull()?.child("email")?.value as? String
-                    callback(email)
+
+                    if (email.isNullOrBlank()) {
+                        Log.w("RealtimeDatabase", "El email encontrado está vacío o es nulo.")
+                        callback(null)
+                    } else {
+                        Log.d("RealtimeDatabase", "Email encontrado: $email")
+                        callback(email)
+                    }
                 } else {
+                    Log.w("RealtimeDatabase", "No se encontró un usuario con el nombre: $username")
                     callback(null)
                 }
             }
             .addOnFailureListener { e ->
-                Log.e("RealtimeDatabase", "Error al buscar el usuario", e)
+                Log.e("RealtimeDatabase", "Error al buscar el usuario en Firebase", e)
                 callback(null)
             }
     }
+
 }

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,8 +24,16 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         // Inicializar Realtime Database y FirebaseAuth
-        database = FirebaseDatabase.getInstance().getReference("users")
+        val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
+        database = FirebaseDatabase.getInstance(databaseURL).getReference("users")
         auth = FirebaseAuth.getInstance()
+
+        googleSignInClient = GoogleSignIn.getClient(
+            this,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        )
 
         // Referencias a los elementos del layout
         val userNameTextView = findViewById<TextView>(R.id.user_name)
@@ -59,9 +69,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnLogOut.setOnClickListener {
-            // Cerrar sesión
             auth.signOut()
-
             googleSignInClient.signOut().addOnCompleteListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -69,5 +77,6 @@ class ProfileActivity : AppCompatActivity() {
                 finish()
             }
         }
+
     }
 }
