@@ -1,14 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Companion Persona</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
     <string name="welcome_message">¡Bienvenido a Undisputed Companion!</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="login">Iniciar Sesión</string>
     <string name="register">Registrarse</string>
 
-
+    <!-- Nuevos strings -->
+    <string name="character_images">Character Images</string>
+    <string name="close_detail">Close Detail</string>
+    <string name="confidant_card">Confidant Card</string>
+    <string name="confidant_name">Confidant Name</string>
+    <string name="confidant_information">Here you will find all you need to know to upgrade your social link in the most optimal way.</string>
+    <string name="title_confidants">Confidents</string>
+    <string name="toggle_label">Character Images</string>
+    <string name="detail_availability">Availability:</string>
+    <string name="detail_requisites">Requisites:</string>
+    <string name="detail_note">Note:</string>
 </resources>
