@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         val account = GoogleSignIn.getLastSignedInAccount(this)
         account?.let {
             Log.d("Login Google", "Ya has robado la info de la cuenta: ${account.displayName} anteriormente")
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } ?: run {
@@ -144,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener { dataSnapshot ->
                 if (dataSnapshot.exists()) {
                     // Usuario ya existe, redirigir directamente
-                    val intent = Intent(this, ProfileActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
@@ -163,29 +163,63 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun saveUserToRealtimeDatabase(uid: String, name: String?, email: String?, onSuccess: () -> Unit) {
-        val user = mapOf(
-            "name" to (name ?: "Desconocido"),
-            "email" to (email ?: "Sin email"),
-            "id" to uid,
-            "public_id" to generatePublicUserID()
-        )
+        generateUniquePublicUserID { publicID ->
+            val user = mapOf(
+                "name" to (name ?: "Desconocido"),
+                "email" to (email ?: "Sin email"),
+                "id" to uid,
+                "public_id" to publicID
+            )
 
-        databaseReference.child(uid).setValue(user)
-            .addOnSuccessListener {
-                Log.d("RealtimeDatabase", "Usuario guardado exitosamente en la base de datos")
-                onSuccess()
+            databaseReference.child(uid).setValue(user)
+                .addOnSuccessListener {
+                    Log.d("RealtimeDatabase", "Usuario guardado exitosamente en la base de datos")
+                    onSuccess()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("RealtimeDatabase", "Error al guardar el usuario en la base de datos", e)
+                }
+        }
+    }
+
+
+    private fun generateUniquePublicUserID(callback: (String) -> Unit) {
+        val letters = ('A'..'Z').toList()
+
+        fun generateID(): String {
+            val randomLetter = letters.random()
+
+            val numbers = (1000000 .. 99999999).toList()
+            val randomNumber = numbers.random()
+            return "$randomLetter$randomNumber"
+        }
+
+
+        //Comprobar si el ID ya existe en Database
+
+        val newID = generateID()
+
+        Log.d("GeneratedID", "ID generado: $newID")  // Log para ver el ID generado
+
+
+        databaseReference.orderByChild("public_id").equalTo(newID).get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    // Si el ID ya existe, generar uno nuevo
+                    Log.d("RealtimeDatabase", "ID duplicado encontrado: $newID. Generando uno nuevo.")
+                    generateUniquePublicUserID(callback)
+                } else {
+                    // Si el ID es único, retornar el resultado
+                    Log.d("RealtimeDatabase", "ID único generado: $newID")
+                    callback(newID)
+                }
             }
             .addOnFailureListener { e ->
-                Log.e("RealtimeDatabase", "Error al guardar el usuario en la base de datos", e)
+                Log.e("RealtimeDatabase", "Error al verificar unicidad del ID en Firebase", e)
+                callback(generateID()) // Si falla la verificación, retornar un ID nuevo
             }
     }
 
-    private fun generatePublicUserID(): String {
-        val letters = ('A'..'Z').toList()
-        val randomLetter = letters.random()
-        val randomNumber = (1000..9999).random()
-        return "$randomLetter$randomNumber" // Ejemplo: "A1234"
-    }
 
     //para iniciar sesion con correo
     private fun signInWithEmail(email: String, password: String) {
@@ -204,6 +238,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+
 
     //para que se pueda iniciar sesion con usuario o correo indiferentemente
     private fun findEmailByUsername(username: String, callback: (String?) -> Unit) {
