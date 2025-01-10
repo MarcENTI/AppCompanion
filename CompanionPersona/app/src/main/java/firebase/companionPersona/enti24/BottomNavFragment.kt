@@ -60,6 +60,7 @@ class BottomNavFragment : Fragment() {
                         .commit()
                     true
                 }
+
                 else -> false
             }
         }
