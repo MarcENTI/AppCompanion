@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.auth.User
 import models.Chat
 
 class ChatFragment : Fragment() {
@@ -26,15 +25,11 @@ class ChatFragment : Fragment() {
     private lateinit var chatRecyclerViewManager: RecyclerView.LayoutManager
     private var chatList: MutableList<Chat> = mutableListOf()
 
-
-
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflar el layout para este fragment
         return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
@@ -44,21 +39,22 @@ class ChatFragment : Fragment() {
         val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
         database = FirebaseDatabase.getInstance(databaseURL).getReference()
 
-        //variables buiscar usuario
+        // Variables para buscar usuario
         val searchEditText = view.findViewById<EditText>(R.id.UserSearchText)
         val searchButton = view.findViewById<ImageButton>(R.id.UserSearchSend)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewChats)
 
-        val layoutManager = RecyclerView.LayoutManager::class.java.cast(
-            androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-        )
+        val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
 
-        chatAdapter = ChatAdapter(chatList)
+        // Inicialización del adaptador con la función onChatClick
+        chatAdapter = ChatAdapter(chatList) { chat ->
+            openChatWithUser(chat.userID, chat.person)
+        }
         recyclerView.adapter = chatAdapter
 
-        searchButton.setOnClickListener{
+        searchButton.setOnClickListener {
             val publicID = searchEditText.text.toString().trim()
             if (publicID.isNotEmpty()) {
                 searchUserByPublicId(publicID)
@@ -90,19 +86,23 @@ class ChatFragment : Fragment() {
             })
     }
 
-    private  fun openChatWithUser(userID: String, userName: String){
-
-        val newChat = Chat(person = userName, lastMessage = "Sin mensajes", profileImageId = R.drawable.jack_frost)
-
+    private fun openChatWithUser(userID: String, userName: String) {
+        // Verificar si el chat ya existe en la lista
         if (chatList.none { it.person == userName }) {
+            val newChat = Chat(
+                person = userName,
+                lastMessage = "Sin mensajes",
+                profileImageId = R.drawable.jack_frost,
+                userID = userID // Asegúrate de pasar el userID correctamente
+            )
             chatList.add(newChat)
             chatAdapter.notifyItemInserted(chatList.size - 1)
         }
 
+        // Abrir la actividad de chat
         val intent = Intent(requireContext(), InternalChatUsers::class.java)
         intent.putExtra("userId", userID)
         intent.putExtra("userName", userName)
         startActivity(intent)
     }
-
 }
