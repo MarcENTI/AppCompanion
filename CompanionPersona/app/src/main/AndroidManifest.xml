@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Permiso de Internet requerido por Retrofit -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,32 +15,58 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompanionPersona"
         tools:targetApi="31">
+
+        <!-- PersonaAdapter -->
         <activity
             android:name=".PersonaAdapter"
             android:exported="false" />
-        <!-- Ejemplo: SplashScreenActivity -->
+
+        <!-- ProfileActivity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- CalendarFragment -->
+        <activity
+            android:name=".CalendarFragment"
+            android:exported="false" />
+
+        <!-- SplashScreenActivity -->
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true">
-
-            <!-- Si es la primera pantalla de la app: -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Login, Register, y otras Activities REALES -->
+        </activity>
+
+        <!-- LoginActivity -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
+
+        <!-- RegisterActivity -->
         <activity
             android:name=".RegisterActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
+
+        <!-- NavBar -->
+        <activity
+            android:name=".NavBar"
+            android:exported="false" />
+
+        <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
