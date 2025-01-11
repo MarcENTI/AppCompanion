@@ -7,8 +7,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -27,14 +25,13 @@ class InternalChatUsers : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         val databaseURL = "https://p3rcompanion-default-rtdb.europe-west1.firebasedatabase.app/"
-        database = FirebaseDatabase.getInstance(databaseURL).getReference("messages")
+        database = FirebaseDatabase.getInstance(databaseURL).getReference("chats")  // Cambié la referencia aquí
 
-        //mensaje
+        // Variables de UI
         val messageEditText: EditText = findViewById(R.id.editTextMessage)
         val sendButton: ImageButton = findViewById(R.id.buttonSend)
 
-
-        //coger datos del usuario con el que hablo
+        // Obtener datos del usuario con el que estás chateando
         chattingWithUserId = intent.getStringExtra("userId")
         chattingWithUserName = intent.getStringExtra("userName")
 
@@ -52,26 +49,24 @@ class InternalChatUsers : AppCompatActivity() {
                 sendMessage(message) // Llamamos a la función que enviará el mensaje
                 messageEditText.text.clear() // Limpiamos el campo de texto
             }
-
-
         }
     }
-
-
 
     private fun sendMessage(message: String) {
         val currentUserId = firebaseAuth.currentUser?.uid
         if (currentUserId == null || chattingWithUserId == null) return
 
-        // Crear un ID único para el chat
+        // Crear un ID único para el chat entre el usuario actual y el usuario con el que se está chateando
         val chatId = if (currentUserId.compareTo(chattingWithUserId!!) < 0) {
             "${currentUserId}_$chattingWithUserId"
         } else {
             "${chattingWithUserId}_$currentUserId"
         }
 
+        // Crear un ID único para el mensaje
         val messageId = database.child(chatId).push().key
 
+        // Crear el mensaje con los detalles correspondientes
         val messageData = mapOf(
             "from" to currentUserId,
             "to" to chattingWithUserId,
@@ -79,7 +74,7 @@ class InternalChatUsers : AppCompatActivity() {
             "timestamp" to System.currentTimeMillis()
         )
 
-        // Guardar en Firebase
+        // Guardar el mensaje en Firebase bajo el chatId y el messageId
         if (messageId != null) {
             database.child(chatId).child(messageId).setValue(messageData)
                 .addOnSuccessListener {
@@ -90,5 +85,8 @@ class InternalChatUsers : AppCompatActivity() {
                 }
         }
 
+        // Agregar log para depuración
+        Log.d("SendMessage", "Enviando mensaje: $message")
+        Log.d("SendMessage", "chatId: $chatId, messageId: $messageId")
     }
 }
