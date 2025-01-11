@@ -1,6 +1,8 @@
 package firebase.companionPersona.enti24
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.GridLayout
@@ -77,12 +79,19 @@ class CalendarFragment : Fragment() {
         for (col in dayHeaders.indices) {
             val headerView = TextView(requireContext())
             headerView.text = dayHeaders[col]
+
             headerView.setPadding(16,16,16,16)
 
             val params = GridLayout.LayoutParams()
             params.rowSpec = GridLayout.spec(0)
             params.columnSpec = GridLayout.spec(col)
             headerView.layoutParams = params
+
+            val white = Color.WHITE
+            headerView.setTextColor(white)
+            headerView.setTextSize(1,20f)
+
+            headerView.setShadowLayer(3f,0f, 0f, Color.BLACK)
 
             daysContainer.addView(headerView)
         }
@@ -99,6 +108,10 @@ class CalendarFragment : Fragment() {
                 val params = GridLayout.LayoutParams()
                 params.rowSpec = GridLayout.spec(row)
                 params.columnSpec = GridLayout.spec(col)
+
+                val white = Color.WHITE
+                cellView.setTextColor(white)
+                cellView.setShadowLayer(7f,0f, 0f, Color.BLACK)
                 cellView.layoutParams = params
 
                 if ((row == 1 && col < offset) || dayCount > daysInMonth) {

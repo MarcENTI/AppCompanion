@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9cd8f6">
+    android:background="@drawable/background_white">
 
 
     <LinearLayout
@@ -47,7 +47,9 @@
                 android:text="\n\n\nDecember 2009"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/black" />
+                android:textColor="@color/white"
+                android:shadowColor="@color/black"
+                android:shadowRadius="7"/>
 
             <ImageButton
                 android:id="@+id/nextMonthBtn"
@@ -65,7 +67,8 @@
             android:layout_height="wrap_content"
             android:columnCount="7"
             android:rowCount="7"
-            android:background="#32a6df"></GridLayout>
+            android:background="#32a6df"
+           ></GridLayout>
 
     </LinearLayout>
 

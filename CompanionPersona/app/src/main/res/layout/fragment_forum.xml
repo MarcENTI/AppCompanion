@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatFragment">
+    tools:context=".ChatFragment"
+    android:background="@drawable/background_white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,7 +35,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/forum_text_bg4"
-                    android:text="\n\t\t\t\t   Lorem ipsum dolor sit amet, consectetur adipiscing\n\t\t\t\t\t\t\t\t\t\t\t           elit, sed do eiusmod tempor incididunt\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t ut labore et dolore" />
+                    android:text="\n\t\t\t\t   Lorem ipsum dolor sit amet, consectetur adipiscing\n\t\t\t\t\t\t\t\t\t\t\t           elit, sed do eiusmod tempor incididunt\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t ut labore et dolore"
+                    android:textColor="@color/white"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="7"/>
 
             </LinearLayout>
 
@@ -56,7 +60,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/forum_text_bg1"
-                    android:text="\n            Lorem ipsum dolor sit amet, consectetur\n           adipiscing elit, sed do eiusmod tempor" />
+                    android:text="\n            Lorem ipsum dolor sit amet, consectetur\n           adipiscing elit, sed do eiusmod tempor"
+                    android:textColor="@color/white"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="7"/>
 
             </LinearLayout>
 
@@ -86,7 +93,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/forum_text_bg2"
                         android:text="\nLorem ipsum dolor sit amet"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowRadius="7"/>
 
                 </LinearLayout>
 
@@ -110,7 +120,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/forum_text_bg2"
                         android:text="\nLorem ipsum dolor sit"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowRadius="7"/>
                 </LinearLayout>
             </LinearLayout>
 
