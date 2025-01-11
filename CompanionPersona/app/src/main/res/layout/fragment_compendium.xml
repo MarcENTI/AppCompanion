@@ -13,16 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <ProgressBar
-            android:id="@+id/progressBarCompendium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp"/>
-
-
+        
         <TextView
             android:id="@+id/fusionCalculatorTitle"
             android:layout_width="wrap_content"
@@ -60,17 +51,9 @@
 
             <EditText
                 android:id="@+id/compendiumSearchEditText"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Persona's name"
-                android:layout_marginEnd="8dp"/>
-
-            <CheckBox
-                android:id="@+id/filtersCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Filters"/>
+                android:hint="Persona's name"/>
         </LinearLayout>
 
 
@@ -104,9 +87,19 @@
         </LinearLayout>
 
 
+        <ProgressBar
+            android:id="@+id/progressBarCompendium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/compendiumRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </ScrollView>
