@@ -26,7 +26,10 @@ class BottomNavFragment : Fragment() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.forum -> {
-                    // Aquí colocar fragmento de forum
+                    val forumFragment = ForumFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.inner_fragment_container, forumFragment)
+                        .commit()
                     true
                 }
                 R.id.compendium -> {

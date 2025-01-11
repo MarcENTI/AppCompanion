@@ -8,16 +8,17 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:padding="16dp"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@drawable/background_white">
 
-    <TextView
+    <ImageView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Persona 3 Companion"
+        android:layout_height="152dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/companion_logo"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etUsername"
@@ -26,7 +27,14 @@
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:padding="12dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:shadowColor="#3987c8"
+        android:textColorHint="@color/white"
+        android:shadowRadius="2"
+        android:shadowDx="10"
+        android:shadowDy="-5"
+        android:background="@drawable/textbox_bg1"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -35,26 +43,47 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:shadowColor="#3987c8"
+        android:textColorHint="@color/white"
+        android:shadowRadius="2"
+        android:shadowDx="10"
+        android:shadowDy="-5"
+        android:background="@drawable/textbox_bg1"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/login"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:background="@drawable/white_button5"
+        android:shadowColor="@color/black"
+        android:shadowRadius="7"
+        android:text="@string/login" />
+
+    <ImageView
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/line_separator" />
 
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/register"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="50dp"
+        android:background="@drawable/white_button5"
+        android:shadowColor="@color/black"
+        android:shadowRadius="7"
+        android:text="@string/register" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_login_google"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="30dp"
+        />
 
 </LinearLayout>
