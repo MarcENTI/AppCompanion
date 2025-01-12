@@ -38,7 +38,7 @@ class ChatAdapter(
         fun bind(chat: Chat, onChatClick: (Chat) -> Unit) {
             personName.text = chat.person
             lastMessage.text = chat.lastMessage
-            profileImage.setImageResource(chat.profileImageId)
+            profileImage.setImageResource(R.drawable.jack_frost)
 
             // Configurar el listener de clic en el item de la lista
             itemView.setOnClickListener {

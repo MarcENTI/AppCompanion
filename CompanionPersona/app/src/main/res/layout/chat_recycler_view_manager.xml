@@ -12,7 +12,9 @@
         android:layout_height="156dp"
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_gravity="center" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
