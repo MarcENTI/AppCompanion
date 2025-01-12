@@ -1,15 +1,15 @@
 package firebase.companionPersona.enti24
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.view.menu.MenuView
-import androidx.appcompat.view.menu.MenuView.ItemView
-import androidx.core.graphics.drawable.IconCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 
 class BottomNavFragment : Fragment() {
@@ -26,9 +26,19 @@ class BottomNavFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val bottomNavigationView: BottomNavigationView = view.findViewById(R.id.navBar)
         val titleImage: ImageView = view.findViewById(R.id.titleImage)
         val profileImage: ImageView = view.findViewById(R.id.profileImage)
+
+        profileImage.setOnClickListener(OnClickListener {
+            val intent: Intent = Intent(
+                this@BottomNavFragment,
+                ProfileActivity::class.java
+            )
+            startActivity(intent)
+        })
+
 
         profileImage.setImageResource(R.drawable.jack_frost)
 
@@ -86,7 +96,7 @@ class BottomNavFragment : Fragment() {
 
     }
 
-    }
+}
 
 
 
