@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@drawable/background_white">
 
 
     <EditText
@@ -12,9 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nuevo Usuario"
-        android:inputType="textPersonName"
         style="@style/TextAppearance.Body"
-        android:layout_marginTop="8dp" />
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/white"
+        android:shadowColor="#3987c8"
+        android:textColorHint="@color/white"
+        android:shadowRadius="2"
+        android:shadowDx="10"
+        android:shadowDy="-5"
+        android:background="@drawable/textbox_bg1"/>
 
 
     <EditText
@@ -24,7 +32,15 @@
         android:hint="Nueva Contraseña"
         android:inputType="textPassword"
         style="@style/TextAppearance.Body"
-        android:layout_marginTop="8dp" />
+        android:padding="12dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:shadowColor="#3987c8"
+        android:textColorHint="@color/white"
+        android:shadowRadius="2"
+        android:shadowDx="10"
+        android:shadowDy="-5"
+        android:background="@drawable/textbox_bg1"/>
 
 
     <EditText
@@ -34,14 +50,26 @@
         android:hint="Correo Electrónico"
         android:inputType="textEmailAddress"
         style="@style/TextAppearance.Body"
-        android:layout_marginTop="8dp" />
+        android:padding="12dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:shadowColor="#3987c8"
+        android:textColorHint="@color/white"
+        android:shadowRadius="2"
+        android:shadowDx="10"
+        android:shadowDy="-5"
+        android:background="@drawable/textbox_bg1"/>
 
 
     <Button
         android:id="@+id/btnRegisterConfirm"
+        style="@style/TextAppearance.Body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/white_button5"
+        android:shadowColor="@color/black"
+        android:shadowRadius="7"
         android:text="Registrar"
-        style="@style/TextAppearance.Body"
-        android:layout_marginTop="16dp" />
+        android:textColor="@color/white" />
 </LinearLayout>
