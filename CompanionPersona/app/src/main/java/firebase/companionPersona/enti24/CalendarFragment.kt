@@ -90,9 +90,7 @@ class CalendarFragment : Fragment() {
             val white = Color.WHITE
             headerView.setTextColor(white)
             headerView.setTextSize(1,20f)
-
             headerView.setShadowLayer(3f,0f, 0f, Color.BLACK)
-
             daysContainer.addView(headerView)
         }
 
