@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.bumptech.glide.Glide
 import models.Chat
 
 class ChatFragment : Fragment() {
@@ -100,7 +101,7 @@ class ChatFragment : Fragment() {
             val newChat = Chat(
                 person = userName,
                 lastMessage = "Sin mensajes",
-                profileImageId = R.drawable.jack_frost,
+                profileImageId = R.drawable.jack_frost, // Usar la imagen predeterminada
                 userID = userID // Asegúrate de pasar el userID correctamente
             )
             chatList.add(newChat)
@@ -125,8 +126,6 @@ class ChatFragment : Fragment() {
         val userChatsRef = database.child("chats").child(userId).push() // Usa push para crear un ID único para cada chat
         userChatsRef.setValue(chat)
     }
-
-
 
     // Guardar los chats en SharedPreferences
     private fun saveChatsToSharedPreferences() {
@@ -160,7 +159,6 @@ class ChatFragment : Fragment() {
         }
     }
 
-
     private fun loadChatsFromFirebase() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
@@ -170,7 +168,10 @@ class ChatFragment : Fragment() {
                         chatList.clear()
                         for (chatSnapshot in snapshot.children) {
                             val chat = chatSnapshot.getValue(Chat::class.java)
-                            chat?.let { chatList.add(it) }
+                            chat?.let {
+                                // Aquí no necesitas hacer nada, la imagen predeterminada se asigna en la clase Chat
+                                chatList.add(it)
+                            }
                         }
                         chatAdapter.notifyDataSetChanged()
                     }
@@ -182,7 +183,5 @@ class ChatFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Usuario no autenticado", Toast.LENGTH_SHORT).show()
         }
-
     }
-
 }
