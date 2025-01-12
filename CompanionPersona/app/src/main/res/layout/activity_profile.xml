@@ -79,5 +79,14 @@
         android:textColor="@android:color/white"
         android:text="Delete Account" />
 
+    <Button
+        android:id="@+id/crashTestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:text="Crash" />
+
 
 </LinearLayout>

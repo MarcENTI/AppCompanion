@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     id("kotlin-kapt")
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation(libs.firebase.crashlytics)
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

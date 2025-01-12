@@ -1,5 +1,6 @@
 package firebase.companionPersona.enti24
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -25,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
 
     var isEditing = false
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -54,6 +56,9 @@ class ProfileActivity : AppCompatActivity() {
 
         //eliminar cuenta
         val deleteAccountButton = findViewById<Button>(R.id.deleteAccountButton)
+
+        //Crash Test Button
+        val crashTestButton = findViewById<Button>(R.id.crashTestButton)
 
 
         val currentUser = auth.currentUser
@@ -111,6 +116,10 @@ class ProfileActivity : AppCompatActivity() {
         //borrar cuenta
         deleteAccountButton.setOnClickListener{
             deleteAccount()
+        }
+
+        crashTestButton.setOnClickListener{
+            throw RuntimeException("Test Crash!")
         }
 
     }
