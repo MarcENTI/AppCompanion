@@ -28,6 +28,9 @@ class BottomNavFragment : Fragment() {
 
         val bottomNavigationView: BottomNavigationView = view.findViewById(R.id.navBar)
         val titleImage: ImageView = view.findViewById(R.id.titleImage)
+        val profileImage: ImageView = view.findViewById(R.id.profileImage)
+
+        profileImage.setImageResource(R.drawable.jack_frost)
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
