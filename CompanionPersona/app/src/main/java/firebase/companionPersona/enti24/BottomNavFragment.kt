@@ -50,6 +50,8 @@ class BottomNavFragment : Fragment() {
                 }
                 R.id.chat -> {
                     val chatFragment = ChatFragment()
+
+                    titleImage.setImageResource(R.drawable.title_chat)
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.inner_fragment_container, chatFragment)
                         .commit()
