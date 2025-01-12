@@ -32,11 +32,9 @@ class BottomNavFragment : Fragment() {
         val profileImage: ImageView = view.findViewById(R.id.profileImage)
 
         profileImage.setOnClickListener(OnClickListener {
-            val intent: Intent = Intent(
-                this@BottomNavFragment,
-                ProfileActivity::class.java
-            )
+            val intent: Intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
+
         })
 
 
