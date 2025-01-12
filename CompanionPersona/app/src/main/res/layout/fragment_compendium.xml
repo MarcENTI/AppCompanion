@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollContainerCompendium"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/compendium_bg"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        
+        <TextView
+            android:id="@+id/fusionCalculatorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fusion Calculator"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"/>
+
+
+        <EditText
+            android:id="@+id/fusionCalculatorEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Introduce the Persona you search"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:shadowColor="#3987c8"
+            android:textColorHint="#39d5f5"
+            android:shadowRadius="2"
+            android:shadowDx="10"
+            android:shadowDy="-5"
+            android:background="@drawable/textbox_bg1"/>
+
+
+        <TextView
+            android:id="@+id/compendiumTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compendium"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/compendiumSearchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Persona's name"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp"
+                android:textColor="@color/white"
+                android:shadowColor="#3987c8"
+                android:textColorHint="#39d5f5"
+                android:shadowRadius="2"
+                android:shadowDx="10"
+                android:shadowDy="-5"
+                android:background="@drawable/textbox_bg1"/>
+
+            <CheckBox
+                android:id="@+id/filtersCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filters"
+                android:textColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/filterButtonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/btnByArcana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Arcana"
+                android:layout_marginEnd="8dp"
+                android:shadowColor="@color/black"
+                android:shadowRadius="7"
+                android:background="@drawable/basic_button_bg"/>
+
+            <Button
+                android:id="@+id/btnByLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Level"
+                android:layout_marginEnd="8dp"
+                android:shadowColor="@color/black"
+                android:shadowRadius="7"
+                android:background="@drawable/basic_button_bg"/>
+
+            <Button
+                android:id="@+id/btnByName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Name"
+                android:shadowColor="@color/black"
+                android:shadowRadius="7"
+                android:background="@drawable/basic_button_bg"/>
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBarCompendium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/compendiumRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_transparent_bg"/>
+    </LinearLayout>
+</ScrollView>

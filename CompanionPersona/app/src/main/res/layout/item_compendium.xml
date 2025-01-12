@@ -1,0 +1,59 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/personaImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:background="@drawable/white_button5">
+
+        <TextView
+            android:id="@+id/personaNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingLeft="50dp"
+            android:textStyle="bold"
+            android:textColor="#40529f"
+            android:shadowColor="#3987c8"
+            android:shadowDx="10"
+            android:shadowDy="-5"
+            android:shadowRadius="2"
+            />
+
+        <TextView
+            android:id="@+id/arcanaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:paddingLeft="50dp"
+            android:textColor="#3aa6de"
+            android:background="#40529f"
+            />
+
+        <TextView
+            android:id="@+id/personaLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:paddingLeft="50dp"
+            android:textColor="#40529f"
+            android:shadowColor="#3987c8"
+            android:shadowDx="10"
+            android:shadowDy="-5"
+            android:shadowRadius="2"
+            />
+    </LinearLayout>
+</LinearLayout>
