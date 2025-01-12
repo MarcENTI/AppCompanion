@@ -37,7 +37,10 @@ class BottomNavFragment : Fragment() {
                     true
                 }
                 R.id.chat -> {
-                    // Aquí colocar fragmento de chat
+                    val chatFragment = ChatFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.inner_fragment_container, chatFragment)
+                        .commit()
                     true
                 }
                 R.id.calendar -> {
