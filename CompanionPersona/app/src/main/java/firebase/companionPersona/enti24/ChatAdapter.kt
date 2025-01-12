@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import models.Chat
 
 class ChatAdapter(
@@ -38,11 +39,15 @@ class ChatAdapter(
         fun bind(chat: Chat, onChatClick: (Chat) -> Unit) {
             personName.text = chat.person
             lastMessage.text = chat.lastMessage
-            profileImage.setImageResource(R.drawable.jack_frost)
 
-            // Configurar el listener de clic en el item de la lista
+            // Cargar la imagen con Glide y recortarla a un círculo
+            Glide.with(itemView.context)
+                .load(R.drawable.jack_frost)
+                .circleCrop()
+                .into(profileImage)
+
+            // Configurar el listener de clic en el item de la list
             itemView.setOnClickListener {
-                // Al hacer clic, llamamos al onChatClick pasándole el objeto completo del chat
                 onChatClick(chat)
             }
         }
