@@ -15,9 +15,17 @@
         android:theme="@style/Theme.CompanionPersona"
         tools:targetApi="31">
         <activity
-            android:name=".InternalChatUsers"
+            android:name=".SteamApiService"
             android:exported="false" />
-        <!-- PersonaAdapter -->
+        <activity
+            android:name=".SteamNewsResponse"
+            android:exported="false" />
+        <activity
+            android:name=".SteamRetrofitInstance"
+            android:exported="false" />
+        <activity
+            android:name=".InternalChatUsers"
+            android:exported="false" /> <!-- PersonaAdapter -->
         <activity
             android:name=".PersonaAdapter"
             android:exported="false" /> <!-- ProfileActivity -->
