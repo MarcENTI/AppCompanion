@@ -191,8 +191,7 @@ class LoginActivity : AppCompatActivity() {
         fun generateID(): String {
             val randomLetter = letters.random()
 
-            val numbers = (1000000 .. 99999999).toList()
-            val randomNumber = numbers.random()
+            val randomNumber = (1000000..99999999).random()
             return "$randomLetter$randomNumber"
         }
 
